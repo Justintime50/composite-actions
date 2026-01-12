@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.3.0 (2026-01-11)
+
+- Adds `publish-docker` action
+- Creates `traefik` Docker network for `bootstrap-php` action
+
 ## v0.2.0 (2026-01-11)
 
 - Adds `coverage: xdebug` to `setup-php` step of `bootstrap-php`

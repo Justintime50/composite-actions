@@ -23,3 +23,5 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
     - uses: extractions/setup-just@v3
+    - run: docker network create traefik
+      shell: bash

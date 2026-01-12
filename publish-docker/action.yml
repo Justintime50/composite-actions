@@ -1,0 +1,39 @@
+name: Publish Docker Image To My Registry
+description: Publish a Docker image to my Docker registry
+
+inputs:
+  registry_url:
+    description: 'Docker registry URL (e.g. docker.io)'
+    required: false
+  username:
+    description: 'Docker registry username'
+    required: true
+  password:
+    description: 'Docker registry password or token'
+    required: true
+  image_name:
+    description: 'Docker image name (e.g. justintime50/justinpaulhammond)'
+    required: true
+  image_tag:
+    description: 'Docker image tag (e.g. latest, ${{ github.sha }})'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+    - uses: docker/setup-qemu-action@v3
+    - name: Sign into Docker Registry
+      shell: bash
+      run: echo "${{ inputs.password }}" | docker login ${{ inputs.registry_url }} -u ${{ inputs.username }} --password-stdin
+    - name: Build Docker image
+      shell: bash
+      run: |
+        docker build \
+          -t ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.image_tag }} \
+          --build-arg PROD=true \
+          --platform linux/amd64 \
+          .
+    - name: Push image to Registry
+      shell: bash
+      run: docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
