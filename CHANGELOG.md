@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.4.0 (2026-01-12)
+
+- Add `setup-uv` to `bootstrap-python` action
+- Fix publish-docker reference
+
 ## v0.3.0 (2026-01-11)
 
 - Adds `publish-docker` action
