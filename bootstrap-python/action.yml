@@ -1,0 +1,17 @@
+name: Bootstrap Python Actions
+description: Checkout project, install Python, install tooling
+
+inputs:
+  python-version:
+    description: The Python version to use to bootstrap the action with.
+    required: false
+    default: '8.5'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-python@v6
+      with:
+        python-version: ${{ inputs.python-version }}
+    - uses: extractions/setup-just@v3

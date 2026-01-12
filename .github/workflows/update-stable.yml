@@ -1,0 +1,20 @@
+name: update-stable
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch: ~
+
+jobs:
+  update-stable:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: '0'
+      - name: Update stable git tag
+        run: |
+          git tag --force $STABLE_TAG ${GITHUB_REF##*/}
+          git push origin --force $STABLE_TAG
+        env:
+          STABLE_TAG: v1
