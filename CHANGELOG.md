@@ -5,7 +5,7 @@
 - Add `setup-uv` to `bootstrap-python` action
 - Fix publish-docker reference
 
-## v0.3.0 (2026-01-11)
+## v0.3.0 (2026-01-12)
 
 - Adds `publish-docker` action
 - Creates `traefik` Docker network for `bootstrap-php` action
