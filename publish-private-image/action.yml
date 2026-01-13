@@ -1,5 +1,5 @@
-name: Publish Docker Image To My Registry
-description: Publish a Docker image to my Docker registry
+name: Publish Private Docker Image
+description: Publish a Docker image to my private Docker registry
 
 inputs:
   registry_url:
@@ -9,7 +9,7 @@ inputs:
     description: 'Docker registry username'
     required: true
   password:
-    description: 'Docker registry password or token'
+    description: 'Docker registry password'
     required: true
   image_name:
     description: 'Docker image name (e.g. justintime50/justinpaulhammond)'
@@ -37,3 +37,7 @@ runs:
     - name: Push image to Registry
       shell: bash
       run: docker push ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+    - name: Print published tag
+      shell: bash
+      run: |
+        echo "Published image: ${{ inputs.registry_url }}/${{ inputs.image_name }}:${{ inputs.image_tag }}"

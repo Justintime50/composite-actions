@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.5.0 (2026-01-13)
+
+- Split `publish-docker` into `publish-private-image` and `publish-public-image`
+- Re-print the image name once published for Docker action
+
 ## v0.4.0 (2026-01-12)
 
 - Add `setup-uv` to `bootstrap-python` action

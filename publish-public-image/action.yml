@@ -1,0 +1,38 @@
+name: Publish Public Docker Image
+description: Publish a Docker image to Docker Hub
+
+inputs:
+  username:
+    description: 'Docker username'
+    required: true
+  password:
+    description: 'Docker password'
+    required: true
+  image_name:
+    description: 'Docker image name (e.g. justintime50/glass)'
+    required: true
+  image_tag:
+    description: 'Docker image tag (e.g. 1.2.0)'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+    - uses: docker/setup-qemu-action@v3
+    - uses: docker/setup-buildx-action@v3
+    - name: Sign into Docker Registry
+      shell: bash
+      run: echo "${{ inputs.password }}" | docker login -u ${{ inputs.username }} --password-stdin
+    - name: Build Docker image
+      shell: bash
+      run: |
+        docker buildx build --push \
+          -t ${{ inputs.image_name }}:${{ inputs.image_tag }} \
+          --build-arg PROD=true \
+          --platform linux/amd64,linux/arm64 \
+          .
+    - name: Print published tag
+      shell: bash
+      run: |
+        echo "Published image: ${{ inputs.image_name }}:${{ inputs.image_tag }}"
